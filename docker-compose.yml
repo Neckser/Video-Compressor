@@ -1,0 +1,11 @@
+services:
+  ffmpeg-app:
+    build: .
+    container_name: ffmpeg-processor
+    volumes:
+      # Монтируем текущую папку для доступа к видеофайлам
+      - ./:/app
+    environment:
+      - TZ=Europe/Moscow
+    stdin_open: true
+    tty: true
