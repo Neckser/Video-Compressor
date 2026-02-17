@@ -1,103 +1,37 @@
-# Video Compressor - Кроссплатформенная версия
 
-Работает на:
-- ✅ Windows (PowerShell, Git Bash, WSL)
-- ✅ Linux (Ubuntu, Debian, CentOS)
-- ✅ macOS (Intel и Apple Silicon)
+# Video Compressor
+Скрипт для сжатия MP4 видео с сохранением пропорций. Работает через Docker с FFmpeg.
+
+## Требования
+- Docker
+- Docker Compose
+- bash (для Linux/macOS) или PowerShell/Git Bash (для Windows)
 
 ## Быстрый старт
 
-### Linux/macOS
+### 1. Клонируйте репозиторий
 ```bash
-# Сделать скрипт исполняемым
-chmod +x run.sh
-
-# Запустить
-./run.sh
-# или
-make run
+git clone <url-репозитория>
+cd video-compressor
 ```
 
-### Windows (Git Bash)
+### 2. Запустите скрипт
 ```bash
-# Запустить
-./run.sh
-# или
-make run
+./start.sh (может понадобиться chmod +x ./start.sh)
 ```
 
-### Windows (PowerShell)
-```powershell
-.\run.ps1
-```
-
-## Установка
-
-1. Скопируйте все файлы в папку проекта:
-   - Dockerfile
-   - docker-compose.yml
-   - compress.sh
-   - run.sh (для Linux/macOS/Git Bash)
-   - run.ps1 (для Windows PowerShell)
-   - Makefile
-
-2. Соберите образ:
-```bash
-docker build -t video-compressor .
-# или
-make build
-```
-
-## Использование
-
-### Интерактивный режим
-```bash
-make run
-# или
-./run.sh
-```
-
-### Быстрое сжатие
-```bash
-make compress FILE="video.mp4" SIZE=1.2
-```
-
-### Прямой запуск через Docker
-```bash
-# Linux/macOS
-docker run --rm -it -v $(pwd):/workspace video-compressor
-
-# Windows (PowerShell)
-docker run --rm -it -v ${PWD}:/workspace video-compressor
-
-# Windows (Git Bash)
-docker run --rm -it -v "$(pwd):/workspace" video-compressor
-```
+Скрипт автоматически:
+- Соберёт Docker образ
+- Запустит контейнер в интерактивном режиме
+- Покажет доступные MP4 файлы
 
 ## Структура проекта
 ```
 video-compressor/
-├── Dockerfile              # Мультиплатформенный Dockerfile
+├── Dockerfile              # Образ с FFmpeg
 ├── docker-compose.yml      # Docker Compose конфиг
-├── compress.sh             # Основной скрипт
-├── run.sh                  # Запуск для Linux/macOS/Git Bash
-├── run.ps1                 # Запуск для Windows PowerShell
-├── Makefile                # Универсальный Makefile
-└── README.md               # Документация
+├── scriptbyredit.sh        # Основной скрипт сжатия
+├── start.sh                # Запускалка (build + run)
+├── converted/              # Папка для сжатых видео
+└── videos/                # Папка для исходных видео
 ```
-
-## Принцип работы
-
-1. **Автоопределение платформы** - скрипты сами определяют ОС
-2. **Правильные пути** - конвертация путей для Windows
-3. **Мультиархитектурность** - работает на Intel и ARM
-4. **Простота** - одинаковые команды на всех ОС
-
-## Тестирование
-
-Проверено на:
-- ✅ Ubuntu 22.04 (Intel)
-- ✅ macOS 14 (Apple Silicon M2)
-- ✅ Windows 11 + WSL2
-- ✅ Windows 11 + Git Bash
-- ✅ Windows 11 + PowerShell
